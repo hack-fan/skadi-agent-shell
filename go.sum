@@ -7,6 +7,8 @@ github.com/hack-fan/skadigo v0.0.0-20210306011714-9e1eaf6a63bf h1:L2BhvxlN4NF8m9
 github.com/hack-fan/skadigo v0.0.0-20210306011714-9e1eaf6a63bf/go.mod h1:s9h7XQwy8WqNYgktEHgaZKx+1SCkUQBBFCw/QHZZbXI=
 github.com/hack-fan/skadigo v0.0.0-20210310031410-24929f20ede3 h1:690oHhVNG88k2sT0+gukDP6Xl7tRsqCONPN/NAkyYuA=
 github.com/hack-fan/skadigo v0.0.0-20210310031410-24929f20ede3/go.mod h1:s9h7XQwy8WqNYgktEHgaZKx+1SCkUQBBFCw/QHZZbXI=
+github.com/hack-fan/skadigo v0.0.0-20210310033212-a61896947a4f h1:5+swpPzJbkyhZxkoXkbCLgyJ5aZKxw0jjfeg+oKI/Ps=
+github.com/hack-fan/skadigo v0.0.0-20210310033212-a61896947a4f/go.mod h1:s9h7XQwy8WqNYgktEHgaZKx+1SCkUQBBFCw/QHZZbXI=
 github.com/jinzhu/configor v1.2.1 h1:OKk9dsR8i6HPOCZR8BcMtcEImAFjIhbJFZNyn5GCZko=
 github.com/jinzhu/configor v1.2.1/go.mod h1:nX89/MOmDba7ZX7GCyU/VIaQ2Ar2aizBl2d3JLF/rDc=
 github.com/kisielk/gotool v1.0.0/go.mod h1:XhKaO+MFFWcvkIS/tQcRk01m1F5IRFswLeQ+oQHNcck=
