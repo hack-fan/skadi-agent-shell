@@ -1,0 +1,8 @@
+debug: true
+token: YOUR_TOKEN
+commands:
+  - msg: free
+    cmd: free
+  - msg: home
+    cmd: ls
+    dir: ~/
