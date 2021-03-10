@@ -40,6 +40,7 @@ func (s *Settings) CommandsText() string {
 }
 
 func handler(msg string) (string, error) {
+	log.Debugf("received command message: %s", msg)
 	// default error
 	e := fmt.Errorf("unsupported command: %s", msg)
 	// parse command
@@ -66,13 +67,17 @@ func run(cmd, dir string) (string, error) {
 		Stdout: &outBuffer,
 		Stderr: &errBuffer,
 	}
+	log.Debug("command: %+v", command)
 	err := command.Run()
 	if err != nil {
+		log.Error(err)
 		return "", err
 	}
 	if errBuffer.Len() > 0 {
+		log.Errorf("%s", errBuffer.Bytes())
 		return "", errors.New(errBuffer.String())
 	}
+	log.Infof(outBuffer.String())
 	return outBuffer.String(), nil
 }
 
