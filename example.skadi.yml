@@ -8,3 +8,6 @@ commands:
   - msg: root
     cmd: ls
     dir: /
+templates:
+  - name: echo
+    temp: echo %s

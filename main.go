@@ -24,6 +24,11 @@ type Settings struct {
 		Dir string
 		Cmd string
 	}
+	Templates []struct {
+		Name string
+		Dir  string
+		Temp string
+	}
 }
 
 func (s *Settings) CommandsText() string {
@@ -48,6 +53,15 @@ func handler(msg string) (string, error) {
 	for _, cmd := range settings.Commands {
 		if msg == cmd.Msg {
 			return run(cmd.Cmd, cmd.Dir)
+		}
+	}
+	// parse template
+	a := strings.Split(msg, " ")
+	if len(a) > 1 {
+		for _, temp := range settings.Templates {
+			if a[0] == temp.Name {
+				return run(fmt.Sprintf(temp.Temp, a[1:]), temp.Dir)
+			}
 		}
 	}
 	// other
