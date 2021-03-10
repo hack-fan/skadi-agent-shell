@@ -3,6 +3,8 @@ token: YOUR_TOKEN
 commands:
   - msg: free
     cmd: free
-  - msg: home
+  - msg: date
+    cmd: date
+  - msg: root
     cmd: ls
-    dir: ~/
+    dir: /

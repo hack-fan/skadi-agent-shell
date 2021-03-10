@@ -51,6 +51,7 @@ func handler(msg string) (string, error) {
 		}
 	}
 	// other
+	log.Error(e)
 	return "", e
 }
 
