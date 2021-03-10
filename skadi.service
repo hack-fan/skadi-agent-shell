@@ -1,0 +1,24 @@
+# skadi.service
+#
+# For using Skadi agent with a config file.
+#
+# Make sure the ExecStart and ExecReload commands are correct
+# for your installation.
+#
+# See https://github.com/hack-fan/skadi-agent-shell for instructions.
+
+[Unit]
+Description=Skadi
+Documentation=https://github.com/hack-fan/skadi-agent-shell
+After=network.target network-online.target
+Requires=network-online.target
+
+[Service]
+User=root
+Group=root
+ExecStart=/usr/bin/skadi
+TimeoutStopSec=5s
+ProtectSystem=full
+
+[Install]
+WantedBy=multi-user.target
