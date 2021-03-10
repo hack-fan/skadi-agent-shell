@@ -60,7 +60,7 @@ func handler(msg string) (string, error) {
 	if len(a) > 1 {
 		for _, temp := range settings.Templates {
 			if a[0] == temp.Name {
-				return run(fmt.Sprintf(temp.Temp, a[1:]), temp.Dir)
+				return run(fmt.Sprintf(temp.Temp, strings.Join(a[1:], " ")), temp.Dir)
 			}
 		}
 	}
