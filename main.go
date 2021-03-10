@@ -1,8 +1,6 @@
 package main
 
 import (
-	"bytes"
-	"errors"
 	"fmt"
 	"os/exec"
 	"strings"
@@ -57,28 +55,19 @@ func handler(msg string) (string, error) {
 }
 
 func run(cmd, dir string) (string, error) {
-	var outBuffer bytes.Buffer
-	var errBuffer bytes.Buffer
 	ca := strings.Split(cmd, " ")
-	var command = exec.Cmd{
-		Path:   ca[0],
-		Args:   ca[1:],
-		Dir:    dir,
-		Stdout: &outBuffer,
-		Stderr: &errBuffer,
+	var command = exec.Command(ca[0], ca[1:]...)
+	if dir != "" {
+		command.Dir = dir
 	}
 	log.Debug("command: %+v", command)
-	err := command.Run()
+	res, err := command.Output()
 	if err != nil {
 		log.Error(err)
 		return "", err
 	}
-	if errBuffer.Len() > 0 {
-		log.Errorf("%s", errBuffer.Bytes())
-		return "", errors.New(errBuffer.String())
-	}
-	log.Infof(outBuffer.String())
-	return outBuffer.String(), nil
+	log.Infof("%s", res)
+	return string(res), nil
 }
 
 func main() {
