@@ -60,7 +60,7 @@ func run(cmd, dir string) (string, error) {
 	if dir != "" {
 		command.Dir = dir
 	}
-	log.Debug("command: %+v", command)
+	log.Debugf("command: %+v", command)
 	res, err := command.Output()
 	if err != nil {
 		log.Error(err)
