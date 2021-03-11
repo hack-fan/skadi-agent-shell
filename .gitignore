@@ -15,3 +15,5 @@
 # vendor/
 
 skadi.yml
+skadi
+dist/
