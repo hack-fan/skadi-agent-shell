@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"os/exec"
 	"strings"
@@ -105,10 +106,13 @@ func main() {
 	defer logger.Sync() // nolint
 	log = logger.Sugar()
 
+	// context
+	ctx := context.Background()
+
 	// skadi agent
-	agent := skadigo.New(settings.Token, settings.Server, handler, &skadigo.Options{
+	agent := skadigo.New(settings.Token, settings.Server, &skadigo.Options{
 		Logger: log,
 	})
 	log.Info("Skadi agent start")
-	agent.Start()
+	agent.StartWorker(ctx, handler, 0)
 }
