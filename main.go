@@ -3,8 +3,11 @@ package main
 import (
 	"context"
 	"fmt"
+	"os"
 	"os/exec"
+	"os/signal"
 	"strings"
+	"syscall"
 
 	"github.com/hack-fan/skadigo"
 	"github.com/jinzhu/configor"
@@ -107,7 +110,16 @@ func main() {
 	log = logger.Sugar()
 
 	// context
-	ctx := context.Background()
+	ctx, cancel := context.WithCancel(context.Background())
+
+	// system signals - for graceful shutdown or restart
+	sigs := make(chan os.Signal, 1)
+	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
+	go func() {
+		sig := <-sigs
+		log.Infof("%s signal received, send cancel to worker context.", sig)
+		cancel()
+	}()
 
 	// skadi agent
 	agent := skadigo.New(settings.Token, settings.Server, &skadigo.Options{
@@ -115,4 +127,5 @@ func main() {
 	})
 	log.Info("Skadi agent start")
 	agent.StartWorker(ctx, handler, 0)
+	log.Info("this worker have been safety stopped.")
 }
