@@ -1,9 +1,11 @@
 before:
   hooks:
+    - mv example.skadi.yml skadi.yml
     - go mod tidy
 builds:
   - env:
       - CGO_ENABLED=0
+    binary: skadi
     goos:
       - linux
       - darwin
@@ -15,6 +17,10 @@ archives:
       linux: Linux
       windows: Windows
       amd64: x86_64
+    wrap_in_directory: true
+    files:
+      - skadi.yml
+      - skadi.service
 checksum:
   name_template: 'checksums.txt'
 snapshot:
