@@ -21,6 +21,8 @@ archives:
     files:
       - skadi.yml
       - skadi.service
+      - LICENSE
+      - README.md
 checksum:
   name_template: 'checksums.txt'
 snapshot:
