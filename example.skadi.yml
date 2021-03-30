@@ -1,5 +1,9 @@
+# log level
 debug: true
-token: YOUR_TOKEN
+# agent token
+token:
+
+# shortcut convert a single word to shell command
 commands:
   - msg: free
     cmd: free
@@ -8,6 +12,8 @@ commands:
   - msg: root
     cmd: ls
     dir: /
+
+# template use printf style, this is unsafe!
 templates:
   - name: echo
     temp: echo %s
