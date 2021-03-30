@@ -161,12 +161,12 @@ func main() {
 	log = logger.Sugar()
 
 	// if there is one arg, set it as token, then exit.
+	// only change the first found etc file
 	if len(os.Args) == 2 {
 		token := os.Args[1]
 		if len(token) != 20 {
 			log.Fatalf("invalid token: %s", token)
 		}
-		var changed bool
 		for _, fname := range etcFiles {
 			f, err := ioutil.ReadFile(fname)
 			if err != nil {
@@ -207,13 +207,9 @@ func main() {
 			if err != nil {
 				log.Fatalf("write token to etc file [%s] failed: %s", fname, err)
 			}
-
-			changed = true
+			os.Exit(0)
 		}
-		if !changed {
-			log.Fatal("skadi.yml not found")
-		}
-		os.Exit(0)
+		log.Fatal("skadi.yml not found")
 	}
 
 	// check token
