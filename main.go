@@ -95,18 +95,17 @@ func main() {
 	}
 
 	// logger
-	var logger *zap.Logger
+	var log *zap.Logger
 	var err error
 	if settings.Debug {
-		logger, err = zap.NewDevelopment()
+		log, err = zap.NewDevelopment()
 	} else {
-		logger, err = zap.NewProduction()
+		log, err = zap.NewProduction()
 	}
 	if err != nil {
 		panic(err)
 	}
-	defer logger.Sync() // nolint
-	log = logger.Sugar()
+	defer log.Sync() // nolint
 
 	// system signals - for graceful shutdown or restart
 	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
@@ -114,7 +113,7 @@ func main() {
 
 	// skadi agent
 	agent := skadigo.New(settings.Token, settings.Server, &skadigo.Options{
-		Logger: log,
+		Logger: log.Sugar(),
 	})
 	log.Info("Skadi agent start")
 	// blocked
