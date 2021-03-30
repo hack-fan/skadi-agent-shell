@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"os"
 	"os/exec"
 	"os/signal"
 	"strings"
@@ -109,23 +108,18 @@ func main() {
 	defer logger.Sync() // nolint
 	log = logger.Sugar()
 
-	// context
-	ctx, cancel := context.WithCancel(context.Background())
-
 	// system signals - for graceful shutdown or restart
-	sigs := make(chan os.Signal, 1)
-	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
-	go func() {
-		sig := <-sigs
-		log.Infof("%s signal received, send cancel to worker context.", sig)
-		cancel()
-	}()
+	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
+	defer stop()
 
 	// skadi agent
 	agent := skadigo.New(settings.Token, settings.Server, &skadigo.Options{
 		Logger: log,
 	})
 	log.Info("Skadi agent start")
+	// blocked
 	agent.StartWorker(ctx, handler, 0)
+
+	// context dead
 	log.Info("this worker have been safety stopped.")
 }

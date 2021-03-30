@@ -6,6 +6,8 @@ github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSs
 github.com/google/renameio v0.1.0/go.mod h1:KWCgfxg9yswjAJkECMjeO8J8rahYeXnNhOm40UhjYkI=
 github.com/hack-fan/skadigo v0.3.0 h1:HBaE3ECYKVibD9vEMcZZEJQHC4vRJ1clkn0NARZmdNo=
 github.com/hack-fan/skadigo v0.3.0/go.mod h1:s9h7XQwy8WqNYgktEHgaZKx+1SCkUQBBFCw/QHZZbXI=
+github.com/hack-fan/skadigo v0.4.1 h1:+t/n5Cus8F1AV+SNPjgsKrNWRoAHWg1qez+wKGIbfVc=
+github.com/hack-fan/skadigo v0.4.1/go.mod h1:s9h7XQwy8WqNYgktEHgaZKx+1SCkUQBBFCw/QHZZbXI=
 github.com/jinzhu/configor v1.2.1 h1:OKk9dsR8i6HPOCZR8BcMtcEImAFjIhbJFZNyn5GCZko=
 github.com/jinzhu/configor v1.2.1/go.mod h1:nX89/MOmDba7ZX7GCyU/VIaQ2Ar2aizBl2d3JLF/rDc=
 github.com/kisielk/gotool v1.0.0/go.mod h1:XhKaO+MFFWcvkIS/tQcRk01m1F5IRFswLeQ+oQHNcck=

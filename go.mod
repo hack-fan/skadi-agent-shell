@@ -3,7 +3,7 @@ module github.com/hack-fan/skadi-agent-shell
 go 1.16
 
 require (
-	github.com/hack-fan/skadigo v0.3.0
+	github.com/hack-fan/skadigo v0.4.1
 	github.com/jinzhu/configor v1.2.1
 	go.uber.org/multierr v1.6.0 // indirect
 	go.uber.org/zap v1.16.0
