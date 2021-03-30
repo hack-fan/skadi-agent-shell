@@ -24,14 +24,31 @@ var etcFiles = []string{"skadi.yml", "/etc/skadi/skadi.yml"}
 
 // Setting will be load from /etc/skadi/skadi.yml
 type Settings struct {
-	Debug    bool `default:"false"`
-	Token    string
-	Server   string `default:"https://api.letserver.run"`
-	Commands []struct {
-		Msg string
-		Dir string
-		Cmd string
+	Debug  bool `default:"false"`
+	Token  string
+	Server string `default:"https://api.letserver.run"`
+	// Shortcuts convert a single word to shell command
+	// Short: input message, required
+	// Dir: working directory, optional
+	// Cmd: whole command line, required
+	Shortcuts []struct {
+		Short string
+		Dir   string
+		Cmd   string
 	}
+	// Commands is a command white list
+	// Dir: working directory, optional
+	// Prefix: if the input message has the prefix, run it
+	Commands []struct {
+		Dir    string
+		Prefix string
+	}
+	// Templates is a printf style template, this is unsafe
+	// Name: if the first word of input message hit name, run it
+	// Dir: working directory, optional
+	// Temp: render the args to this template string
+	// Example | Name:"Hi" Temp:"echo I am not %s!"
+	// Message [Hi Jim] Result [I am not Jim!]
 	Templates []struct {
 		Name string
 		Dir  string
@@ -40,12 +57,33 @@ type Settings struct {
 }
 
 func (s *Settings) CommandsText() string {
-	if s.Commands == nil || len(s.Commands) == 0 {
-		return "No commands defined."
+	var res string
+	if s.Shortcuts != nil && len(s.Shortcuts) > 0 {
+		res += "\n\nShortcuts:"
+		for _, item := range s.Shortcuts {
+			res += fmt.Sprintf("\n - %s: %s ", item.Short, item.Cmd)
+			if len(item.Dir) > 0 {
+				res += fmt.Sprintf("[%s]", item.Dir)
+			}
+		}
 	}
-	res := "All commands:\n"
-	for _, cmd := range s.Commands {
-		res += fmt.Sprintf("\n[%s] %s (%s)", cmd.Msg, cmd.Cmd, cmd.Dir)
+	if s.Commands != nil && len(s.Commands) > 0 {
+		res += "\n\nCommands:"
+		for _, cmd := range s.Commands {
+			res += fmt.Sprintf("\n - %s ", cmd.Prefix)
+			if len(cmd.Dir) > 0 {
+				res += fmt.Sprintf("[%s]", cmd.Dir)
+			}
+		}
+	}
+	if s.Templates != nil && len(s.Templates) > 0 {
+		res += "\n\nTemplates:"
+		for _, item := range s.Templates {
+			res += fmt.Sprintf("\n - %s: %s ", item.Name, item.Temp)
+			if len(item.Dir) > 0 {
+				res += fmt.Sprintf("[%s]", item.Dir)
+			}
+		}
 	}
 	return res
 }
@@ -54,21 +92,32 @@ func handler(msg string) (string, error) {
 	log.Debugf("received command message: %s", msg)
 	// default error
 	e := fmt.Errorf("unsupported command: %s", msg)
-	// parse command
+	// parse msg
 	if msg == "help" || msg == "all" {
 		return settings.CommandsText(), nil
 	}
-	for _, cmd := range settings.Commands {
-		if msg == cmd.Msg {
-			return run(cmd.Cmd, cmd.Dir)
+	// shortcut
+	for _, item := range settings.Shortcuts {
+		if msg == item.Short {
+			return run(item.Cmd, item.Dir)
 		}
 	}
-	// parse template
+	// command
+	for _, item := range settings.Commands {
+		if strings.HasPrefix(msg, item.Prefix) {
+			return run(msg, item.Dir)
+		}
+	}
+	// template
 	a := strings.Split(msg, " ")
 	if len(a) > 1 {
-		for _, temp := range settings.Templates {
-			if a[0] == temp.Name {
-				return run(fmt.Sprintf(temp.Temp, strings.Join(a[1:], " ")), temp.Dir)
+		for _, item := range settings.Templates {
+			if a[0] == item.Name {
+				b := make([]interface{}, len(a)-1)
+				for i, v := range a[1:] {
+					b[i] = v
+				}
+				return run(fmt.Sprintf(item.Temp, b...), item.Dir)
 			}
 		}
 	}

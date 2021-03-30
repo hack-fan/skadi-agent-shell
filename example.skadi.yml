@@ -1,19 +1,28 @@
 # log level
 debug: true
 # agent token
-token:
-
-# shortcut convert a single word to shell command
-commands:
-  - msg: free
-    cmd: free
-  - msg: date
-    cmd: date
-  - msg: root
-    cmd: ls
+token: "12345678901234567890"
+# shortcuts convert a single word to shell command
+# short: input message, required
+# dir: working directory, optional
+# cmd: whole command line, required
+shortcuts:
+  - short: date
+    cmd: "date --rfc-3339=second"
+  - short: lsroot
     dir: /
-
-# template use printf style, this is unsafe!
+    cmd: ls
+# commands is a command white list
+# dir: working directory, optional
+# prefix: if the input message has the prefix, run it
+commands:
+  - prefix: free
+# templates is a printf style template, this is unsafe
+# name: if the first word of input message hit name, run it
+# dir: working directory, optional
+# temp: render the args to this template string
+# example | name:"Hi" temp:"echo I am not %s!"
+# message [Hi Jim] result [I am not Jim!]
 templates:
-  - name: echo
-    temp: echo %s
+  - name: Hi
+    temp: "echo I am not %s!"
