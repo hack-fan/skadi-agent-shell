@@ -23,6 +23,35 @@ archives:
       - skadi.service
       - LICENSE
       - README.md
+nfpms:
+  - id: default
+    package_name: skadi
+
+    vendor: hack.fan
+    homepage: https://letserver.run
+    maintainer: hyacinthus <hyacinthus@gmail.com>
+    description: |
+      Control your service by IM, written in Go
+    license: MIT
+
+    formats:
+      - deb
+      - rpm
+
+    bindir: /usr/bin
+    contents:
+      - src: ./skadi.service
+        dst: /lib/systemd/system/skadi.service
+
+      - src: ./example.skadi.yml
+        dst: /etc/skadi/skadi.yml
+        type: "config|noreplace"
+
+    scripts:
+      postinstall: ./scripts/postinstall.sh
+      preremove: ./scripts/preremove.sh
+      postremove: ./scripts/postremove.sh
+
 checksum:
   name_template: 'checksums.txt'
 snapshot:
@@ -31,5 +60,9 @@ changelog:
   sort: asc
   filters:
     exclude:
+      - '^chore:'
+      - '^ci:'
       - '^docs:'
-      - '^test:'
+      - '^test'
+      - '^tmp'
+      - '^wip'
