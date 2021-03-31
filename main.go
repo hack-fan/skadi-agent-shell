@@ -144,7 +144,7 @@ func run(cmd, dir string) (string, error) {
 
 func main() {
 	// load config, user config in workdir has high priority
-	_ = configor.Load(settings, etcFiles...)
+	_ = configor.New(&configor.Config{Silent: true}).Load(settings, etcFiles...)
 
 	// logger
 	var logger *zap.Logger
