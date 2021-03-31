@@ -1,7 +1,7 @@
 # log level
-debug: true
+debug: false
 # agent token
-token: "12345678901234567890"
+token:
 # shortcuts convert a single word to shell command
 # short: input message, required
 # dir: working directory, optional

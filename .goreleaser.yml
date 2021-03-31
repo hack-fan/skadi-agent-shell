@@ -43,7 +43,7 @@ nfpms:
       - src: ./skadi.service
         dst: /lib/systemd/system/skadi.service
 
-      - src: ./example.skadi.yml
+      - src: ./skadi.yml
         dst: /etc/skadi/skadi.yml
         type: "config|noreplace"
 
