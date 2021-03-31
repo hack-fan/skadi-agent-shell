@@ -127,16 +127,16 @@ func handler(msg string) (string, error) {
 }
 
 func run(cmd, dir string) (string, error) {
-	ca := strings.Split(cmd, " ")
-	var command = exec.Command(ca[0], ca[1:]...)
+	var command = exec.Command("sh", "-c", cmd)
 	if dir != "" {
 		command.Dir = dir
 	}
 	log.Debugf("command: %+v", command)
 	res, err := command.Output()
 	if err != nil {
-		log.Error(err)
-		return "", err
+		e := fmt.Errorf("run command failed, %w : %s", err, res)
+		log.Error(e)
+		return "", e
 	}
 	log.Infof("%s", res)
 	return string(res), nil
