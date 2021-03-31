@@ -6,20 +6,27 @@ on:
       - 'v*.*.*'
 
 jobs:
-  goreleaser:
+  release:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      # Cloudsmith CLI tooling for pushing releases
-      - name: Install Cloudsmith CLI
-        run: pip install --upgrade cloudsmith-cli
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
           go-version: 1.16
+
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      # Cloudsmith CLI tooling for pushing releases
+      - name: Install Cloudsmith CLI
+        run: |
+          pip install --upgrade cloudsmith-cli
+          # Add "pip install" CLI tools to PATH
+          echo ~/.local/bin >> $GITHUB_PATH
+
+      # Release by go releaser
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v2
         with:
