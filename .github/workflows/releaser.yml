@@ -50,5 +50,5 @@ jobs:
         run: |
           for filename in dist/*.rpm; do
             echo "Pushing $filename"
-            cloudsmith push deb hackfan/skadi/any-distro/any-version $filename
+            cloudsmith push rpm hackfan/skadi/any-distro/any-version $filename
           done
