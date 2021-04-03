@@ -1,5 +1,8 @@
-# skadi-agent-shell
-A demo of skadi agent binary running in linux shell.
+# Skadi Agent
+Most frequently-used [skadi](https://github.com/hack-fan/skadi) agent.
+Written by go. Published as binary running in your server.
+Can help you run shell command.
+You can also write your own agent, use our [Go SDK](https://github.com/hack-fan/skadigo).
 
 ## Install
 Before we release the deb/rpm/homebrew packages,
