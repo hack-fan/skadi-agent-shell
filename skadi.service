@@ -17,6 +17,7 @@ Requires=network-online.target
 User=root
 Group=root
 ExecStart=/usr/bin/skadi
+Restart=on-success
 TimeoutStopSec=5s
 ProtectSystem=full
 
