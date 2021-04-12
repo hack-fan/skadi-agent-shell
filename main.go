@@ -136,7 +136,7 @@ func run(cmd, dir string) (string, error) {
 	if err != nil {
 		e := fmt.Errorf("run command failed, %w : %s", err, res)
 		log.Error(e)
-		return "", e
+		return string(res), e
 	}
 	log.Infof("%s", res)
 	return string(res), nil
