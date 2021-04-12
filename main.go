@@ -132,7 +132,7 @@ func run(cmd, dir string) (string, error) {
 		command.Dir = dir
 	}
 	log.Debugf("command: %+v", command)
-	res, err := command.Output()
+	res, err := command.CombinedOutput()
 	if err != nil {
 		e := fmt.Errorf("run command failed, %w : %s", err, res)
 		log.Error(e)
