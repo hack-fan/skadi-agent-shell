@@ -22,7 +22,7 @@ var log *zap.SugaredLogger
 var settings = new(Settings)
 var etcFiles = []string{"skadi.yml", "/etc/skadi/skadi.yml"}
 
-// Setting will be load from /etc/skadi/skadi.yml
+// Settings will be load from /etc/skadi/skadi.yml
 type Settings struct {
 	Debug  bool `default:"false"`
 	Token  string
@@ -88,8 +88,8 @@ func (s *Settings) CommandsText() string {
 	return res
 }
 
-func handler(msg string) (string, error) {
-	log.Debugf("received command message: %s", msg)
+func handler(id, msg string) (string, error) {
+	log.Debugf("received command message[%s]: %s", id, msg)
 	// default error
 	e := fmt.Errorf("unsupported command: %s", msg)
 	// parse msg
@@ -227,7 +227,11 @@ func main() {
 	})
 	log.Info("Skadi agent start")
 	// blocked
-	agent.StartWorker(ctx, handler, 0)
+	err = agent.Start(ctx, handler, 0)
+	if err != nil {
+		log.Errorf("skadi shell agent will exit with error: %s", err)
+		os.Exit(1)
+	}
 
 	// context dead
 	log.Info("this worker have been safety stopped.")
