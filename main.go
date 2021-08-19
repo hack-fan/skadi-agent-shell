@@ -10,6 +10,7 @@ import (
 	"os/signal"
 	"strings"
 	"syscall"
+	"time"
 
 	"github.com/hack-fan/skadigo"
 	"github.com/jinzhu/configor"
@@ -227,7 +228,7 @@ func main() {
 	})
 	log.Info("Skadi agent start")
 	// blocked
-	err = agent.Start(ctx, handler, 0)
+	err = agent.Start(ctx, handler, time.Second*10)
 	if err != nil {
 		log.Errorf("skadi shell agent will exit with error: %s", err)
 		os.Exit(1)
